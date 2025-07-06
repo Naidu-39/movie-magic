@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-6 mx-auto glass p-5" 
+     style="background: linear-gradient(135deg, #00008B 0%, #FFD700 50%, #8B0000 100%); 
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.4); 
+            border-radius: 1.5rem;">
+    <h2 class="text-center mb-4" style="color:#fff; letter-spacing:1px; font-weight:bold; text-shadow:0 2px 8px #000;">🔐 Login to Movie Magic</h2>
+    <form id="loginForm">
+        <div class="mb-3">
+            <label class="form-label" style="color:#FFD700;">Email address</label>
+            <input type="email" class="form-control" id="loginEmail" placeholder="you@example.com" required 
+                   style="background:#000033; color:#FFD700; border:1px solid #FFD700;">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" style="color:#FFD700;">Password</label>
+            <input type="password" class="form-control" id="loginPassword" placeholder="••••••••" required 
+                   style="background:#330000; color:#FFD700; border:1px solid #FFD700;">
+        </div>
+        <div class="d-grid">
+            <button type="submit" class="btn fw-bold" style="background:#FFD700; color:#00008B;">Login</button>
+        </div>
+    </form>
+    <p class="mt-3 text-center">Don't have an account? 
+        <a href="/register" class="fw-bold" style="color:#00BFFF;">Register here</a>
+    </p>
+</div>
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const users = JSON.parse(localStorage.getItem('mm_users') || '{}');
+    if (users[email] && users[email].password === password) {
+      localStorage.setItem('mm_user', JSON.stringify({email: email}));
+      window.location.href = '/';
+    } else {
+      alert('Invalid email or password.');
+    }
+  });
+</script>
+{% endblock %}
